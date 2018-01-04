@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/01struts/01struts.iml" filepath="$PROJECT_DIR$/01struts/01struts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/happy2/Activiti-LFP.iml" filepath="$PROJECT_DIR$/happy2/Activiti-LFP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Y2166.iml" filepath="$PROJECT_DIR$/Y2166.iml" />
+      <module fileurl="file://$PROJECT_DIR$/happy/happy.iml" filepath="$PROJECT_DIR$/happy/happy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/happy1/happy1.iml" filepath="$PROJECT_DIR$/happy1/happy1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hibernate/hibernate.iml" filepath="$PROJECT_DIR$/hibernate/hibernate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myStruts2/myStruts2.iml" filepath="$PROJECT_DIR$/myStruts2/myStruts2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybook/mybook.iml" filepath="$PROJECT_DIR$/mybook/mybook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mybook2/mybook2.iml" filepath="$PROJECT_DIR$/mybook2/mybook2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myboot/myboot.iml" filepath="$PROJECT_DIR$/myboot/myboot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myitem/myitem.iml" filepath="$PROJECT_DIR$/myitem/myitem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myspringboot/myspringboot.iml" filepath="$PROJECT_DIR$/myspringboot/myspringboot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mytaobao/mytaobao.iml" filepath="$PROJECT_DIR$/mytaobao/mytaobao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tms/tms.iml" filepath="$PROJECT_DIR$/tms/tms.iml" />
+    </modules>
+  </component>
+</project>

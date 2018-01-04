@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.accp.model.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+  <select id="selectByUser" resultMap="BaseResultMap" parameterType="com.accp.model.User" >
+    select
+    *
+    from user
+    where userName= #{username,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR}
+  </select>
+</mapper>

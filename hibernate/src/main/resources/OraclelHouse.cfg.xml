@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <!---->
+    <session-factory>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+        <property name="connection.username">happy</property>
+        <property name="connection.password">happy</property>
+        <!--sql 方言-->
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <!--连接池-->
+        <!--<property name="connection.pool_size">1</property>-->
+        <!--和当前线程绑定-->
+        <property name="current_session_context_class">thread</property>
+        <!--echo 打印控制台语句 shout-->
+        <property name="show_sql">true</property>
+        <!--格式化代码-->
+        <property name="format_sql">true</property>
+        <!--自动更新表结构 createe  先delete表结构 在创建  update直接更新表结构-->
+        <property name="hbm2ddl.auto">update</property>
+        <mapping resource="cn/happy/day02/entity/District.hbm.xml" />
+        <mapping resource="cn/happy/day02/entity/House.hbm.xml" />
+        <mapping resource="cn/happy/day02/entity/Street.hbm.xml" />
+        <mapping resource="cn/happy/day02/entity/Type.hbm.xml" />
+        <mapping resource="cn/happy/day02/entity/Users.hbm.xml" />
+    </session-factory>
+
+</hibernate-configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

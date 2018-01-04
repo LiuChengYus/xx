@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="01struts" />
+        <module name="Activiti-LFP" />
+        <module name="happy" />
+        <module name="happy1" />
+        <module name="hibernate" />
+        <module name="mybook" />
+        <module name="mybook2" />
+        <module name="myboot" />
+        <module name="myitem" />
+        <module name="myspringboot" />
+        <module name="myStruts2" />
+        <module name="mytaobao" />
+        <module name="test" />
+        <module name="tms" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="01struts" target="1.5" />
+      <module name="Activiti-LFP" target="1.5" />
+      <module name="happy" target="1.5" />
+      <module name="happy1" target="1.5" />
+      <module name="hibernate" target="1.5" />
+      <module name="mybook" target="1.5" />
+      <module name="mybook2" target="1.5" />
+      <module name="myboot" target="1.8" />
+      <module name="myitem" target="1.5" />
+      <module name="myspringboot" target="1.5" />
+      <module name="myStruts2" target="1.5" />
+      <module name="mytaobao" target="1.5" />
+      <module name="test" target="1.5" />
+      <module name="tms" target="1.5" />
+      <module name="Y2166" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

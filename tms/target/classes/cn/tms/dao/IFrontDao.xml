@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tms.dao.IFrontDao">
+    <!--1.登录-->
+    <select id="isLoginFront" resultType="UserInfo">
+        select * from tms_user where username=#{username} and userpwd=#{userpwd}
+    </select>
+
+    <!--获取所有栏目-->
+    <resultMap id="MapperColumn" type="Column">
+        <id property="syscode" column="syscode"></id>
+        <result property="columncode" column="columncode"></result>
+        <result property="columnname" column="columnname"></result>
+        <result property="sort" column="sort"></result>
+        <result property="parentcode" column="parentcode"></result>
+        <result property="status" column="status"></result>
+        <result property="remark" column="remark"></result>
+        <collection property="children"  ofType="Column" select="MapperColumTwo"  column="syscode"></collection>
+    </resultMap>
+
+    <select id="MapperColumTwo" resultType="Column">
+           select * from cm_column where parentcode=#{syscode}
+    </select>
+
+    <select id="columnList" resultType="Column">
+        select * from cm_column where parentcode = 0
+    </select>
+
+    <!--修改密码-->
+    <update id="updateFrontUser">
+        UPDATE  tms_user SET userpwd=#{userpwd} WHERE username=#{username}
+    </update>
+    <!--查询所有栏目下的新闻-->
+    <select id="findNewsByColumnParent" resultType="News" >
+        SELECT * FROM cm_column,news_information
+        WHERE cm_column.syscode=news_information.columntype AND cm_column.parentcode='350d4466-c2a0-11e7-b624-54ee759509c6'
+        ORDER BY publish_time DESC LIMIT 4
+    </select>
+
+     <!--分页查询上一篇和喜爱片-->
+    <select id="findNewLimit" resultType="News">
+        SELECT * FROM cm_column,news_information
+        WHERE cm_column.syscode=news_information.columntype
+    </select>
+
+    <!--查询总的记录数-->
+    <select id="pageCount" resultType="News">
+        SELECT COUNT(*) FROM news_information WHERE columntype='351aec66-c2a0-11e7-b624-54ee759509c6'
+    </select>
+
+    <!--港口表-->
+    <select id="findPortInfo" resultType="PortInfo">
+          SELECT * FROM port_info ORDER BY port_info.`info_code` DESC
+    </select>
+
+    <!--结果表-->
+    <resultMap id="WeekVentoryMapper" type="WeekVentory">
+        <id column="weekcode" property="weekcode"></id>
+        <result column="port" property="port"></result>
+        <result column="typecode" property="typecode"></result>
+        <result column="pubtime" property="pubtime"></result>
+        <result column="price" property="price"></result>
+        <result column="reduceprice" property="reduceprice"></result>
+        <result column="percent" property="percent"></result>
+        <association property="portlumptype" javaType="PortLumpType">
+            <id column="type_code" property="type_code"></id>
+            <result column="woodname" property="woodname"></result>
+        </association>
+    </resultMap>
+    <select id="findWeekVentory" resultMap="WeekVentoryMapper">
+        SELECT * FROM port_lump_type,week_ventory WHERE port_lump_type.type_code=week_ventory.typecode
+        AND DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt; DATE(week_ventory.pubtime) AND week_ventory.port=#{port}
+    </select>
+
+    <!--新闻表-->
+    <select id="findNewsColumn" resultType="News">
+        SELECT * FROM news_information
+    </select>
+
+    <!--报表-->
+    <select id="findWeekVentoryByCode" resultMap="WeekVentoryMapper">
+        SELECT * FROM port_lump_type,week_ventory WHERE port_lump_type.type_code=week_ventory.typecode
+        AND DATE_SUB(CURDATE(), INTERVAL 8 WEEK) &lt; DATE(week_ventory.pubtime) AND week_ventory.port=#{port} AND  port_lump_type.type_code=#{type_code} ORDER BY week_ventory.pubtime
+    </select>
+</mapper>

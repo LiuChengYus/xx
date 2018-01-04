@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cn.happy.day01.entity">
+    <class name="Dog" table="DOG" schema="happy">
+        <id name="dogId"  column="dogId">
+            <!-- native   数据库方言的可移植性 -->
+            <generator class="uuid"/>
+        </id>
+        <property name="dogName" column="dogName"/>
+        <property name="dogAge"  column="dogAge"/>
+    </class>
+
+</hibernate-mapping>

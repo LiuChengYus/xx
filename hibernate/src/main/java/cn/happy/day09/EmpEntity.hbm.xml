@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="cn.happy.day09.EmpEntity" table="EMP" schema="Y2166" lazy="false">
+        <id name="empno" column="EMPNO"/>
+        <property name="empname" column="EMPNAME"/>
+        <property name="deptno" column="DEPTNO"/>
+        <many-to-one name="deptByDeptno" class="cn.happy.day09.DeptEntity">
+            <column name="DEPTNO" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

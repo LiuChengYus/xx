@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="cn.happy.day02.entity">
+    <class name="Type" table="Type" schema="happy">
+        <id name="id"  column="id">
+            <!-- native   数据库方言的可移植性 -->
+            <generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+</hibernate-mapping>

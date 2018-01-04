@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tms.dao.IPrivilegeUserDao">
+    <!--1.登录-->
+    <select id="isLogin" resultType="UserInfo">
+        select * from tms_user where username=#{username} and userpwd=#{userpwd}
+    </select>
+
+
+    <!--权限相关-->
+   <select id="findAllPrivilegeByUserId" resultType="Privilege">
+       select * from sys_privilege
+       where id in
+        (select privilegeid from sys_role_privilege
+        where roleId in (SELECT roleId from sys_user_role
+        where userId =#{id}))
+    </select>
+
+    <!--分页-->
+    <select id="getOneDataRole" resultType="Role">
+        SELECT * FROM sys_role  limit  #{pageIndex},#{pageSize}
+    </select>
+
+    <!--总记录-->
+     <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM sys_role
+     </select>
+
+     <!--查询权限-->
+    <select id="getDataPrivilege" resultType="Privilege">
+        select * from sys_privilege
+    </select>
+
+    <!--删除权限-->
+    <delete id="delRolePrivilege">
+        delete from sys_role_privilege where roleId=#{id}
+    </delete>
+
+    <!--添加权限-->
+    <update id="addRolePrivilege">
+        INSERT INTO sys_role_privilege(roleId,privilegeId) VALUES(#{roleId},#{privilegeId})
+    </update>
+    <!--查询所有栏目-->
+    <select id="findAllColumn" resultType="Column">
+        select * from cm_column
+    </select>
+
+    <!--查询所欲的新闻-->
+    <select id="getOneDataNews" resultType="News">
+     SELECT * FROM news_information WHERE columntype=#{name} ORDER BY update_date DESC limit  #{pageIndex},#{pageSize}
+    </select>
+
+    <!--分类查询总记录-->
+    <select id="getCount" resultType="int">
+      SELECT COUNT(*) from news_information where columntype=#{name}
+    </select>
+
+    <!--增加新闻-->
+    <insert id="addNews">
+        INSERT INTO news_information
+        (information_code,columntype,title,titlecolor,outerlink,weight,weightdate,image_url,primaryword,summary,content,publish_time,go_time,create_by,create_date,update_by,update_date,state,remark,status
+        ) VALUES (UUID(),#{columntype},#{title},#{titlecolor},#{outerlink},#{weight},SYSDATE(),#{image_url},#{primaryword},#{summary},#{content},SYSDATE(),SYSDATE(),1,SYSDATE(),1,SYSDATE(),1,#{remark},#{status});
+    </insert>
+
+    <!--修改新闻-->
+    <update id="updateNews">
+        UPDATE news_information SET
+         columntype=#{columntype},
+         title=#{title},
+         titlecolor=#{titlecolor},
+         outerlink=#{outerlink},
+         weight=#{weight},
+         weightdate=SYSDATE(),
+         image_url=#{image_url},
+         primaryword=#{primaryword},
+         summary=#{summary},
+         content=#{content},
+         publish_time=SYSDATE(),
+         go_time=SYSDATE(),
+         create_by=#{create_by},
+         create_date=SYSDATE(),
+         update_by=#{update_by},
+         update_date=#{update_date},
+         state=#{state},
+         remark=#{remark},
+         status=#{status}
+           WHERE information_code=#{information_code}
+    </update>
+
+    <!--查询所有的新闻列表分页-->
+    <resultMap id="MappNewsTwo" type="News">
+        <!--实体的主键-->
+        <id column="information_code" property="information_code"></id>
+        <!--常规属性-->
+        <result column="title" property="title"></result>
+        <result column="titlecolor" property="titlecolor"></result>
+        <result column="content" property="content"></result>
+        <result column="update_date" property="update_date"></result>
+        <result column="status" property="status"></result>
+   <!--关联  多对一-->
+     <association property="column" javaType="Column">
+         <id column="syscode" property="syscode"></id>
+         <result column="columnname" property="columnname"></result>
+     </association>
+        <association property="userInfo" javaType="UserInfo">
+            <id column="userid" property="userid"></id>
+            <result column="username" property="username"></result>
+        </association>
+
+    </resultMap>
+    <select id="getOneDataNewsTwo" resultMap="MappNewsTwo">
+        SELECT * FROM cm_column,news_information,tms_user
+        <where>
+            news_information.create_by=tms_user.userid AND news_information.columntype=
+            cm_column.syscode  AND  news_information.columntype=#{columntype}
+            <if test="title!=null">
+                AND news_information.title LIKE '%' #{title} '%'
+            </if>
+            <if test="status!=-1">
+                AND news_information.status=#{status}
+            </if>
+            LIMIT #{pageIndex},#{pageSize}
+        </where>
+
+    </select>
+
+    <!--分类查询总记录数-->
+    <select id="getNewsCount" resultType="int">
+        SELECT COUNT(*) from news_information
+       <where>
+            columntype=#{columntype}
+            <if test="title!=null">
+                and title like '%' #{title} '%'
+            </if>
+            <if test="status!=-1">
+                AND status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <!--数据会先多对一-->
+
+    <resultMap id="NewsMap" type="News">
+        <id column="information_code" property="information_code"></id>
+        <result column="columntype" property="columntype"></result>
+        <result column="title" property="title"></result>
+        <result column="titlecolor" property="titlecolor"></result>
+        <result column="outerlink" property="outerlink"></result>
+        <result column="weight" property="weight"></result>
+        <result column="weightdate" property="weightdate"></result>
+        <result column="image_url" property="image_url"></result>
+        <result column="primaryword" property="primaryword"></result>
+        <result column="summary" property="summary"></result>
+        <result column="content" property="content"></result>
+        <result column="publish_time" property="publish_time"></result>
+        <result column="go_time" property="go_time"></result>
+        <result column="create_by" property="create_by"></result>
+        <result column="create_date" property="create_date"></result>
+        <result column="update_by" property="update_by"></result>
+        <result column="update_date" property="update_date"></result>
+        <result column="state" property="state"></result>
+        <result column="remark" property="remark"></result>
+        <result column="status" property="status"></result>
+        <association property="column" javaType="Column">
+            <id column="syscode" property="syscode"></id>
+            <result column="columncode" property="columncode"></result>
+            <result column="columnname" property="columnname"></result>
+            <result column="sort" property="sort"></result>
+            <result column="parentcode" property="parentcode"></result>
+            <result column="status" property="status"></result>
+            <result column="remark" property="remark"></result>
+        </association>
+    </resultMap>
+    <select id="showNews" resultMap="NewsMap">
+        SELECT * FROM cm_column,news_information WHERE cm_column.syscode=news_information.columntype AND news_information.information_code=#{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.book.dao.IUserDao">
+    <!--1.登录-->
+    <select id="login" resultType="User">
+      SELECT * FROM users WHERE user_code=#{user_code} AND password=#{password}
+    </select>
+
+    <!--分页-->
+    <resultMap id="BookMapper" type="Book">
+        <id column="book_id" property="book_id"></id>
+        <result column="book_code" property="book_code"></result>
+        <result column="book_name" property="book_name"></result>
+        <result column="book_type" property="book_type"></result>
+        <result column="book_author" property="book_author"></result>
+        <result column="publish_press" property="publish_press"></result>
+        <result column="publish_date" property="publish_date"></result>
+        <result column="is_borrow" property="is_borrow"></result>
+        <result column="createdBy" property="createdBy"></result>
+        <result column="creation_time" property="creation_time"></result>
+        <result column="last_updatetime" property="last_updatetime"></result>
+        <association property="type" javaType="Type">
+            <id column="id" property="id"></id>
+            <result column="type_name" property="type_name"></result>
+        </association>
+        <association property="author" javaType="Author">
+            <id column="author_id" property="author_id"></id>
+            <result column="author_name" property="author_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="getOneData" resultMap="BookMapper"  parameterMap="map" >
+        SELECT * FROM book_info,book_type,author
+        <where>
+            book_info.book_type=book_type.id AND book_info.book_author=author.author_id
+               <!-- <if test="book_type!=-1">
+                    and book_info.book_type=#{book_type}
+                </if>
+                <if test="book_name!=null">
+                    and  book_info.book_name like '%' #{book_name} '%'
+                </if>
+                <if test="is_borrow!=-1">
+                    and book_info.is_borrow=#{is_borrow}
+                </if>-->
+        </where>
+    </select>
+
+    <!--分类表-->
+    <select id="getType" resultType="Type">
+        select * from book_type
+    </select>
+    <!--总记录-->
+    <select id="getCount" resultType="int" parameterMap="map">
+        select count(*) from book_info
+       <where>
+            <if test="book_type!=0">
+                and book_type=#{book_type}
+            </if>
+            <if test="book_name!=null">
+                and  book_name like '%' #{book_name} '%'
+            </if>
+            <if test="is_borrow!=0">
+                and is_borrow=#{is_borrow}
+            </if>
+        </where>
+    </select>
+    <!--注册-->
+    <insert id="addUser">
+      insert into users(user_code,password,gender,email) values(user_code,password,gender,email)
+    </insert>
+</mapper>
