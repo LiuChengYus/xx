@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="08v-console:war">
+    <output-path>$PROJECT_DIR$/08v-console/target</output-path>
+    <root id="archive" name="08v-console.war">
+      <element id="artifact" artifact-name="08v-console:war exploded" />
+    </root>
+  </artifact>
+</component>

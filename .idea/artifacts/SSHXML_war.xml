@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SSHXML:war">
+    <output-path>$PROJECT_DIR$/SSHXML/target</output-path>
+    <root id="archive" name="Y2166.war">
+      <element id="artifact" artifact-name="SSHXML:war exploded" />
+    </root>
+  </artifact>
+</component>

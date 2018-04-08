@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="10v-service-data:war exploded">
+    <output-path>$PROJECT_DIR$/10v-service-data/target/10v-service-data</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="10v-service-data" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/10v-service-data/target/10v-service-data/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="10v-service-data/web/Web" />
+    </root>
+  </artifact>
+</component>

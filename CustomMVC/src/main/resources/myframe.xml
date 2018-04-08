@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 定义我们的DOC约束文件 -->
+<!-- 定义根节点 (包含元素)-->
+<!-- ELEMENT 表示元素  -->
+<!-- ATTLIST 表示属性 -->
+<!DOCTYPE myframework[
+	
+	<!ELEMENT myframework (actions)>
+	<!ELEMENT actions (action*)>
+	<!ELEMENT action (result*)>
+	
+	<!ATTLIST action 
+				name CDATA #REQUIRED
+				class CDATA #REQUIRED
+	>
+	<!ATTLIST result 
+				name CDATA #IMPLIED
+				redirect (true|false) "false"
+	>
+]	
+>
+<myframework>
+	<actions>
+		<action name="loginAction" class="action.LoginAction">
+			<result name="success">success.jsp</result>
+			<result name="input">login.jsp</result>
+		</action>
+	</actions>
+</myframework>
+
+
+
+

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="13SSMXML:war">
+    <output-path>$PROJECT_DIR$/13SSMXML/target</output-path>
+    <root id="archive" name="13SSMXML.war">
+      <element id="artifact" artifact-name="13SSMXML:war exploded" />
+    </root>
+  </artifact>
+</component>

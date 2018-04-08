@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+">
+   <!--Spring包扫描器-->
+      <context:component-scan base-package="cn.happy"></context:component-scan>
+
+    <!--注解驱动  注册7个Http消息转换器-->
+    <mvc:annotation-driven/>
+
+    <mvc:default-servlet-handler/>
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/jsp"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--1.数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.dirverClass}"></property>
+        <property name="jdbcUrl" value="${jdbc.url}"></property>
+        <property name="user" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--2.识别到jdbc.properties-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!--3.工厂的配置-->
+    <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!--配置什么 在Hibernate中的一些核心属性-->
+        <property name="hibernateProperties">
+            <props>
+                <!--在控制台显示sql-->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop> <!--格式化sql-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop> <!--方言-->
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop>
+            </props>
+        </property>
+        <!--关联小配置 义德-->
+        <property name="mappingDirectoryLocations" value="cn/happy/entity"></property>
+    </bean>
+
+    <!--4.配置dao层-->
+
+    <!--5.service-->
+
+   <!--6.controller-->
+
+    <!--7.事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager"></bean>
+
+
+    <!--8。事务的配置-->
+</beans>

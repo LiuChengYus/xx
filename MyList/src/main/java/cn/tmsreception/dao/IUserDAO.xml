@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper
+            PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="cn.tmsreception.dao.IUserDAO">
+
+    <select id="isLogin" resultType="Tms_User">
+        SELECT * from tms_user WHERE username=#{username} and userpwd=#{userpwd}
+    </select>
+    <select id="getUsercount" resultType="int">
+        select count(1) from tms_user WHERE username=#{username}
+    </select>
+    <update id="upUser">
+         UPDATE tms_user SET userpwd=#{userpwd} WHERE username=#{username}
+    </update>
+    </mapper>
+

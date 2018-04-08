@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <constant name="struts.devMode" value="true"></constant>
+    <package name="day07" namespace="/" extends="default">
+        <action name="login" class="cn.happy.day07interceptor.action.LoginAction">
+            <result name="success" >/WEB-INF/myinter/success.jsp</result>
+            <result name="login" >/WEB-INF/myinter/login.jsp</result>
+        </action>
+    </package>
+
+</struts>

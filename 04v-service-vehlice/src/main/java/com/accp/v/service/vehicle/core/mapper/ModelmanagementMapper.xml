@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.v.service.vehicle.core.dao.ModelmanagementMapper">
+  <resultMap id="BaseResultMap" type="com.accp.v.service.vehicle.core.model.Modelmanagement">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="carType" jdbcType="VARCHAR" property="cartype" />
+    <result column="announcement" jdbcType="VARCHAR" property="announcement" />
+    <result column="mileage" jdbcType="DOUBLE" property="mileage" />
+    <result column="topSpeed" jdbcType="DOUBLE" property="topspeed" />
+    <result column="length" jdbcType="DOUBLE" property="length" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="weigth" jdbcType="DOUBLE" property="weigth" />
+    <result column="seatNumber" jdbcType="INTEGER" property="seatnumber" />
+    <result column="doornum" jdbcType="INTEGER" property="doornum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, carType, announcement, mileage, topSpeed, length, width, weigth, seatNumber, 
+    doornum
+  </sql>
+  <select id="selectByExample" parameterType="com.accp.v.service.vehicle.core.model.ModelmanagementExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from modelmanagement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.accp.v.service.vehicle.core.model.ModelmanagementExample">
+    delete from modelmanagement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.accp.v.service.vehicle.core.model.Modelmanagement">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into modelmanagement (carType, announcement, mileage, 
+      topSpeed, length, width, 
+      weigth, seatNumber, doornum
+      )
+    values (#{cartype,jdbcType=VARCHAR}, #{announcement,jdbcType=VARCHAR}, #{mileage,jdbcType=DOUBLE}, 
+      #{topspeed,jdbcType=DOUBLE}, #{length,jdbcType=DOUBLE}, #{width,jdbcType=DOUBLE}, 
+      #{weigth,jdbcType=DOUBLE}, #{seatnumber,jdbcType=INTEGER}, #{doornum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.v.service.vehicle.core.model.Modelmanagement">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into modelmanagement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cartype != null">
+        carType,
+      </if>
+      <if test="announcement != null">
+        announcement,
+      </if>
+      <if test="mileage != null">
+        mileage,
+      </if>
+      <if test="topspeed != null">
+        topSpeed,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="weigth != null">
+        weigth,
+      </if>
+      <if test="seatnumber != null">
+        seatNumber,
+      </if>
+      <if test="doornum != null">
+        doornum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cartype != null">
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="announcement != null">
+        #{announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="mileage != null">
+        #{mileage,jdbcType=DOUBLE},
+      </if>
+      <if test="topspeed != null">
+        #{topspeed,jdbcType=DOUBLE},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="weigth != null">
+        #{weigth,jdbcType=DOUBLE},
+      </if>
+      <if test="seatnumber != null">
+        #{seatnumber,jdbcType=INTEGER},
+      </if>
+      <if test="doornum != null">
+        #{doornum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.accp.v.service.vehicle.core.model.ModelmanagementExample" resultType="java.lang.Long">
+    select count(*) from modelmanagement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update modelmanagement
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cartype != null">
+        carType = #{record.cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.announcement != null">
+        announcement = #{record.announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mileage != null">
+        mileage = #{record.mileage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.topspeed != null">
+        topSpeed = #{record.topspeed,jdbcType=DOUBLE},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=DOUBLE},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=DOUBLE},
+      </if>
+      <if test="record.weigth != null">
+        weigth = #{record.weigth,jdbcType=DOUBLE},
+      </if>
+      <if test="record.seatnumber != null">
+        seatNumber = #{record.seatnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.doornum != null">
+        doornum = #{record.doornum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update modelmanagement
+    set id = #{record.id,jdbcType=INTEGER},
+      carType = #{record.cartype,jdbcType=VARCHAR},
+      announcement = #{record.announcement,jdbcType=VARCHAR},
+      mileage = #{record.mileage,jdbcType=DOUBLE},
+      topSpeed = #{record.topspeed,jdbcType=DOUBLE},
+      length = #{record.length,jdbcType=DOUBLE},
+      width = #{record.width,jdbcType=DOUBLE},
+      weigth = #{record.weigth,jdbcType=DOUBLE},
+      seatNumber = #{record.seatnumber,jdbcType=INTEGER},
+      doornum = #{record.doornum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!--在此处检查-->
+  <!--All数据-->
+  <select id="getAccountModelmanagementAll" resultType="int">
+    select count(1) from modelmanagement
+    <where>
+      <if test="name!=null">
+        and modelmanagement.cartype like CONCAT(CONCAT('%', #{name}), '%')
+      </if>
+    </where>
+  </select>
+
+  <!--分页-->
+  <select id="getModelmanagementPageUtil" resultType="com.accp.v.service.vehicle.core.model.Modelmanagement">
+    SELECT * FROM modelmanagement
+    <where>
+      <if test="name!=null">
+        and modelmanagement.cartype like CONCAT(CONCAT('%', #{name}), '%')
+      </if>
+    </where>
+    order by id  limit  #{pageIndex},#{pageSize}
+  </select>
+
+</mapper>

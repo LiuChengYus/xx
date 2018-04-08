@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--不用重新启动tomcat-->
+    <constant name="struts.devMode" value="true"></constant>
+    <!--开启动态方法调用-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <package name="day10" namespace="/" extends="struts-default">
+
+        <!--默认action引用-->
+        <default-action-ref name="notfoundaction"></default-action-ref>
+        <!--默认action-->
+        <action name="notfoundaction">
+            <result>com/day02/404.jsp</result>
+        </action>
+
+        <!--全局结果集-->
+       <!-- <global-results>
+            <result name="input">com/day01/login.jsp</result>
+        </global-results>-->
+
+      <!--  <action name="firstactionlist" class="com.accp.day03moneymethe.FirstAction" method="list">
+            <result name="list" >com/day02/list.jsp</result>
+        </action>
+
+        <action name="firstactiondel" class="com.accp.day03moneymethe.FirstAction" method="del">
+            <result name="del" >com/day02/del.jsp</result>
+        </action>-->
+
+
+        <!--动态方法调用-->
+        <!--<action name="dmiaction" class="com.accp.day04dmi.DmiAction">
+            <result name="list" >com/day02/list.jsp</result>
+            <result name="del" >com/day02/del.jsp</result>
+        </action>-->
+
+        <!--通配符-->
+        <!--<action name="*_*" class="com.accp.day05pattrem.{1}" method="{2}">
+            <result name="{2}" >com/day02/{2}.jsp</result>
+        </action>-->
+
+        <!--结果类型-->
+        <!--默认转发到页面-->
+        <action name="resultActionList" class="com.accp.day06result.ResultAction" method="list">
+            <result name="list">com/day02/list.jsp</result>
+        </action>
+        <!--转发到action方法-->
+        <action name="resultActionadd" class="com.accp.day06result.ResultAction" method="add">
+            <result name="add" type="chain">
+                <param name="actionName">resultActionList</param>
+                <param name="namespace">/</param>
+            </result>
+        </action>
+
+        <action name="ognlaction" class="com.accp.day07ognl.OgnlAction" >
+            <result name="success">value.jsp</result>
+        </action>
+
+
+    </package>
+
+</struts>

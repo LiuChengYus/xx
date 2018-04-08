@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="CustomMVC:war">
+    <output-path>$PROJECT_DIR$/CustomMVC/target</output-path>
+    <root id="archive" name="CustomMVC.war">
+      <element id="artifact" artifact-name="CustomMVC:war exploded" />
+    </root>
+  </artifact>
+</component>

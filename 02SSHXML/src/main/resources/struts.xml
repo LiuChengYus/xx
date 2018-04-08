@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--在包的上面-->
+    <!--常量设置
+     devMode：development Mode 开发者模式
+
+     true:当你修正了Struts.xml配置文件 不需要重新启动tomcat
+    -->
+    <constant name="struts.devMode" value="true"></constant>
+    <!-- struts2的action必须放在一个指定的包空间下定义 继承父类的包-->
+    <package name="default" namespace="/" extends="struts-default">
+
+        <interceptors>
+            <interceptor name="myInter" class="cn.happy.day07interceptor.interceptor.Myinterceptor"></interceptor>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="myInter"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myStack"></default-interceptor-ref>
+        <default-action-ref name="first"></default-action-ref>
+        <global-results>
+            <result name="login">/WEB-INF/myinter/login.jsp</result>
+        </global-results>
+        <action name="first">
+
+        </action>
+
+        <!-- 定义处理请求URL为login.action的Action -->
+       <!-- <action name="UserAction" class="cn.happy.action.UserAction">
+            &lt;!&ndash; 定义处理结果字符串和资源之间的映射关系 type="plainText" 打印源代码 &ndash;&gt;
+            <result name="success" >/success.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>-->
+
+        <!--day02使用的-->
+        <action name="loginAction" class="cn.happy.day02servletapi.UserAction">
+            <!-- 定义处理结果字符串和资源之间的映射关系 type="plainText" 打印源代码 -->
+            <result name="success" >/day02/success.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>
+    </package>
+     <include file="struts-day03.xml"></include>
+    <include file="struts-day04.xml"></include>
+    <include file="struts-day05.xml"></include>
+    <include file="struts-day06.xml"></include>
+    <include file="struts-day07.xml"></include>
+</struts>

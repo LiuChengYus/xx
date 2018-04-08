@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--不用重新启动tomcat-->
+    <constant name="struts.devMode" value="true"></constant>
+    <!--开启动态方法调用-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <package name="day12" namespace="/" extends="struts-default">
+        <!--单个拦截器的使用-->
+  <!-- <interceptors>
+        <interceptor name="myTimer" class="com.accp.day09timerintercepor.MyTimerInterceptor"></interceptor>
+    </interceptors>
+        <action name="index">
+            <result>/index.jsp</result>
+            &lt;!&ndash;拦截器引用&ndash;&gt;
+            <interceptor-ref name="myTimer"></interceptor-ref>
+            &lt;!&ndash;默认拦截器属性&ndash;&gt;
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+        </action>-->
+
+        <!--拦截器栈-->
+
+
+       <!-- <interceptors>
+            &lt;!&ndash;定义拦截器&ndash;&gt;
+            <interceptor name="myTimer" class="com.accp.day09timerintercepor.MyTimerInterceptor"></interceptor>
+            &lt;!&ndash;定义拦截器栈&ndash;&gt;
+            <interceptor-stack name="myTimerStack">
+                &lt;!&ndash;指定拦截器的引用&ndash;&gt;
+                <interceptor-ref name="myTimer"></interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="myTimerStack"></default-interceptor-ref>
+        <action name="index">
+            <result>/index.jsp</result>
+            &lt;!&ndash;为ation指定拦截器引用&ndash;&gt;
+           &lt;!&ndash; <interceptor-ref name="myTimer"></interceptor-ref>&ndash;&gt;
+        </action>-->
+
+        <interceptors>
+            <interceptor name="author" class="com.accp.day09timerintercepor.AuthorizationInterceptor">
+
+            </interceptor>
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="author"></interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="author"></default-interceptor-ref>
+        <action name="manager">
+            <result name="success">/manager.jsp</result>
+            <result name="input">/login.jsp</result>
+            <interceptor-ref name="myStack"></interceptor-ref>
+        </action>
+
+
+        <action name="dateConvert" class="com.accp.day10type.DateConvertAction">
+            <result name="input">/index.jsp</result>
+            <result name="success">/success.jsp</result>
+        </action>
+
+
+        <action name="register" class="cn.happy.day09success.RegisterAction">
+            <result name="success">/result.jsp</result>
+        </action>
+    </package>
+
+</struts>

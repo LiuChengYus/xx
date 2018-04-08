@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <context:component-scan base-package="cn.tmsreception"></context:component-scan>
+
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!--2.识别到jdbc.properties文件-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"></property>
+    </bean>
+
+    <!--关键点：SqlSessionFactory生成权交给Spring-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!--大配置-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+
+    <!--3.DAO    没有实现类-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.tmsreception.dao"></property>
+    </bean>
+
+    <!--事务：事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--方式三：AspectJ AOP 注解-->
+    <tx:advice id="stockAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="buy*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="StockException"/>
+            <tx:method name="select*" isolation="DEFAULT" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!--1.切点-->
+        <aop:pointcut id="mypointcut" expression="execution(* *..service.impl.*.*(..))"></aop:pointcut>
+        <!--3.顾问-->
+        <aop:advisor advice-ref="stockAdvice" pointcut-ref="mypointcut"></aop:advisor>
+        <!--2.切面-->
+
+
+    </aop:config>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"></property>
+        <property name="maxUploadSize" value="5000000000"></property>
+        <property name="resolveLazily" value="true"></property>
+    </bean>
+
+<!-- quartz第一种：-->
+   <!-- <bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="myBean"></property>
+        <property name="targetMethod" value="printMessage"></property>
+    </bean>-->
+    <!--第二种-->
+    <bean id="firstComplexJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="cn.tmsreception.quartz.FirstScheduledJob"></property>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="anotherBean" value-ref="anotherBean" />
+
+            </map>
+        </property>
+        <property name="Durability" value="true"/>
+    </bean>
+<!--距离当前1秒后执行，每个两秒执行一次-->
+   <!-- <bean id="mySimpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="simpleJobDetail"></property>
+        <property name="startDelay" value="1000"></property>
+        <property name="repeatInterval" value="2000"></property>
+    </bean>-->
+<bean id="myCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    <property name="jobDetail" ref="firstComplexJobDetail"></property>
+    <property name="cronExpression" value="0/5 * * ? * *"></property>
+</bean>
+
+<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="jobDetails">
+        <list>
+         <!--   <ref bean="simpleJobDetail"></ref>-->
+            <ref bean="firstComplexJobDetail"></ref>
+        </list>
+    </property>
+    <property name="triggers">
+        <list>
+          <!--  <ref bean="mySimpleTrigger"></ref>-->
+            <ref bean="myCronTrigger"></ref>
+        </list>
+    </property>
+</bean>
+
+
+
+
+
+
+
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <mvc:annotation-driven/>
+
+
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+

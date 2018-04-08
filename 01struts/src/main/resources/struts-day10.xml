@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <constant name="struts.devMode" value="true"></constant>
+    <package name="day09" namespace="/" extends="struts-default">
+
+        <!--全局结果集-->
+        <global-results>
+            <result name="input">com/day01/login.jsp</result>
+        </global-results>
+        <!--javabean属性的自动装配-->
+        <!--<action name="value" class="cn.happy.day08ognl.action.SecondAction">
+            <result name="success" >com/day01/success.jsp</result>
+        </action>-->
+        <action name="value" class="com.accp.day02validate.LoginAction">
+            <result name="success" >com/day01/success.jsp</result>
+        </action>
+    </package>
+
+</struts>

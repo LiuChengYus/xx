@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <!--不用重新启动tomcat-->
+    <constant name="struts.devMode" value="true"></constant>
+    <!--开启动态方法调用-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+    <package name="day11" namespace="/" extends="struts-default">
+        <!--什么也不写默认是SUCCESS 自定义类型转换器-->
+        <action name="register" class="com.accp.day08Typeconversion.RegisterAction" >
+            <result name="success">/studentInfo.jsp</result>
+            <result name="input">/register.jsp</result>
+        </action>
+
+       <!-- <action name="xxx" class="com.accp.day08Typeconversion.test.StudentAction" >
+            <result >/show.jsp</result>
+        </action>
+        &lt;!&ndash;内置类型转换器&ndash;&gt;
+        <action name="type" class="com.accp.day08Typeconversion.test.StudentAction" >
+            <result >/input.jsp</result>
+        </action>-->
+    </package>
+
+</struts>

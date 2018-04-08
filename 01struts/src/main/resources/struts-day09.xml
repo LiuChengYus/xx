@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <constant name="struts.devMode" value="true"></constant>
+    <package name="day08" namespace="/" extends="struts-default">
+        <!--零散属性的自动装配-->
+        <action name="login" class="com.accp.day01.starts.LoginAction">
+            <result name="success" >com/day01/success.jsp</result>
+            <result name="login" >com/day01/login.jsp</result>
+        </action>
+        <!--javabean属性的自动装配-->
+        <action name="loginbean" class="com.accp.day01.starts.LoginBeanAction">
+            <result name="success" >com/day01/success.jsp</result>
+            <result name="login" >com/day01/loginBean.jsp</result>
+        </action>
+    </package>
+
+</struts>

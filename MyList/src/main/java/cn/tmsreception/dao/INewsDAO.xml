@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper
+            PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="cn.tmsreception.dao.INewsDAO">
+    <select id="findAllNewsbycode" resultType="News">
+         SELECT * FROM `news_information`
+ WHERE `columntype` IN (SELECT `cm_column`.syscode FROM `cm_column` WHERE `cm_column`.parentcode='350d4466-c2a0-11e7-b624-54ee759509c6')
+ ORDER BY `publish_time`  DESC  LIMIT 4
+    </select>
+    <resultMap id="newsmapper" type="News">
+        <id property="information_code" column="information_code"></id>
+        <result property="columntype" column="columntype"></result>
+        <result property="title" column="title"></result>
+        <result property="titlecolor" column="titlecolor"></result>
+        <result property="outerlink" column="outerlink"></result>
+        <result property="weight" column="weight"></result>
+        <result property="weightdate" column="weightdate"></result>
+        <result property="image_url" column="image_url"></result>
+        <result property="primaryword" column="primaryword"></result>
+        <result property="summary" column="summary"></result>
+        <result property="content" column="content"></result>
+        <result property="publish_time" column="publish_time"></result>
+        <result property="go_time" column="go_time"></result>
+        <result property="create_by" column="create_by"></result>
+        <result property="create_date" column="create_date"></result>
+        <result property="status" column="status"></result>
+        <association property="column" javaType="Column">
+            <id property="syscode" column="syscode"></id>
+            <result property="columnname" column="columnname"></result>
+            <result property="columncode" column="columncode"></result>
+            <result property="sort" column="sort"></result>
+        </association>
+    </resultMap>
+    <select id="selNews" resultType="News">
+         SELECT * FROM `news_information`
+        WHERE `information_code` =#{nid};
+    </select>
+
+<select id="selupNews" resultType="News">
+SELECT * FROM `news_information`
+        WHERE  `publish_time` &gt;(SELECT publish_time FROM news_information WHERE `information_code` =#{nid}) ORDER BY publish_time ASC LIMIT 1
+</select>
+    <select id="seldownNews" resultType="News">
+        SELECT * FROM `news_information`
+        WHERE `publish_time` &lt;(SELECT publish_time FROM news_information WHERE `information_code` =#{nid}) ORDER BY publish_time DESC  LIMIT 1
+    </select>
+
+    </mapper>
+

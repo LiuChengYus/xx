@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+   <!--创建Session的基础配置-->
+    <session-factory>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+        <property name="connection.username">y2166</property>
+        <property name="connection.password">y2166</property>
+
+        <!--开启二级缓存-->
+        <property name="cache.use_second_level_cache">true</property>
+        <!--factory-->
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+
+           <!--查询缓存的配置-->
+        <property name="hibernate.cache.use_query_cache">true</property>
+
+
+        <!-- JDBC 连接池(use the built-in) -->
+   <!--     <property name="connection.pool_size">1</property>-->
+
+        <!-- SQL dialect （方言）-->
+        <property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+
+        <!-- Enable Hibernate's automatic session context management
+          session工厂创建的session和当前线程绑定bind
+         -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  启用/关闭二级缓存-->
+       <!-- <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>-->
+
+        <!-- Echo   all executed SQL to stdout 在控制台打印sql -->
+        <property name="show_sql">true</property>
+        <!--格式化SQL-->
+        <property name="format_sql">true</property>
+        <!-- Drop and re-create （重新创建）the database schema（架构） on startup （启动）
+         是否根据hbm.xml自动建表 建表的策略 update create
+         hbm配置文件》》》》》》》ddl  数据表
+         create: 过程：先drop 再Create
+         update:检查现有表的架构是否存在，真实开发中，在上线后，一定update
+        -->
+        <property name="hbm2ddl.auto">update</property>
+         <!--关联小配置 -->
+       <!-- <mapping resource="cn/hibernate/day02hql/entity/Dept.hbm.xml"/>
+        <mapping resource="cn/hibernate/day03hqldynamic/entity/Emp.hbm.xml"/>-->
+
+        <!--manytoone配置-->
+       <!-- <mapping resource="cn/hibernate/day04mapping/manytoone/Dept.hbm.xml"/>
+        <mapping resource="cn/hibernate/day04mapping/manytoone/Emp.hbm.xml"/>
+-->
+        <!--one2manydouble-->
+      <!--  <mapping resource="cn/hibernate/day04mapping/onetwomanydouble/Dept.hbm.xml"/>
+        <mapping resource="cn/hibernate/day04mapping/onetwomanydouble/Emp.hbm.xml"/>-->
+
+        <!--many-to-many-->
+     <!--   <mapping resource="cn/hibernate/day04mapping/manytomany/Employee.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day04mapping/manytomany/Project.hbm.xml"></mapping>-->
+
+        <mapping resource="cn/hibernate/day07cache/Dept.hbm.xml"></mapping>
+        <mapping resource="cn/hibernate/day07cache/Emp.hbm.xml"></mapping>
+
+
+        <!--<mapping class="cn.hibernate.day06annotation.base.Dept"></mapping>-->
+        <!--<mapping class="cn.hibernate.day06annotation.onetoone.entity.Dept"></mapping>-->
+        <!--<mapping class="cn.hibernate.day06annotation.onetoone.entity.Emp"></mapping>-->
+
+
+
+    <!--    <mapping class="cn.hibernate.day06annotation.onetomany.Dept"></mapping>
+        <mapping class="cn.hibernate.day06annotation.onetomany.Emp"></mapping>-->
+        <mapping class="cn.hibernate.day06annotation.manytomany.Students"></mapping>
+        <mapping class="cn.hibernate.day06annotation.manytomany.Teachers"></mapping>
+        <class-cache class="cn.hibernate.day07cache.Dept" usage="read-write"></class-cache>
+    </session-factory>
+
+</hibernate-configuration
+>
